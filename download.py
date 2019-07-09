@@ -21,8 +21,8 @@ from tqdm import tqdm
 from six.moves import urllib
 
 parser = argparse.ArgumentParser(description='Download dataset for DCGAN.')
-parser.add_argument('datasets', metavar='N', type=str, nargs='+', choices=['celebA', 'lsun', 'mnist'],
-           help='name of dataset to download [celebA, lsun, mnist]')
+parser.add_argument('datasets', metavar='N', type=str, nargs='+', choices=['celebA', 'lsun', 'mnist', 'monet'],
+           help='name of dataset to download [celebA, lsun, mnist, monet]')
 
 def download(url, dirpath):
   filename = url.split('/')[-1]
@@ -164,6 +164,29 @@ def download_mnist(dirpath):
     print('Decompressing ', file_name)
     subprocess.call(cmd)
 
+def download_monet(dirpath):
+    data_dir = 'monet'
+    link = "https://drive.google.com/file/d/1d0MCjHbfU5MUv2NN1r-bbMJf4rf-Frpq/view?usp=sharing"
+    if os.path.exists(os.path.join(dirpath, 'monet')):
+        print('Found MONET - skip')
+        return
+
+    filename, drive_id  = "monet.zip", "1d0MCjHbfU5MUv2NN1r-bbMJf4rf-Frpq"
+    save_path = os.path.join(dirpath, filename)
+
+    if os.path.exists(save_path):
+      print('[*] {} already exists'.format(save_path))
+    else:
+      download_file_from_google_drive(drive_id, save_path)
+
+    zip_dir = ''
+    with zipfile.ZipFile(save_path) as zf:
+      zip_dir = zf.namelist()[0]
+      zf.extractall(dirpath)
+    os.remove(save_path)
+    os.rename(os.path.join(dirpath, zip_dir), os.path.join(dirpath, data_dir))
+
+
 def prepare_data_dir(path = './data'):
   if not os.path.exists(path):
     os.mkdir(path)
@@ -178,3 +201,5 @@ if __name__ == '__main__':
     download_lsun('./data')
   if 'mnist' in args.datasets:
     download_mnist('./data')
+  if 'monet' in args.datasets:
+    download_monet('./data')
