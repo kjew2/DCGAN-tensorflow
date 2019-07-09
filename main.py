@@ -31,8 +31,8 @@ flags.DEFINE_boolean("visualize", False, "True for visualizing, False for nothin
 flags.DEFINE_boolean("export", False, "True for exporting with new batch size")
 flags.DEFINE_boolean("freeze", False, "True for exporting with new batch size")
 flags.DEFINE_integer("max_to_keep", 1, "maximum number of checkpoints to keep")
-flags.DEFINE_integer("sample_freq", 200, "sample every this many iterations")
-flags.DEFINE_integer("ckpt_freq", 200, "save checkpoint every this many iterations")
+flags.DEFINE_integer("sample_freq", 400, "sample every this many iterations")
+flags.DEFINE_integer("ckpt_freq", 400, "save checkpoint every this many iterations")
 flags.DEFINE_integer("z_dim", 100, "dimensions of z")
 flags.DEFINE_string("z_dist", "uniform_signed", "'normal01' or 'uniform_unsigned' or uniform_signed")
 flags.DEFINE_boolean("G_img_sum", False, "Save generator image summaries in log")
@@ -41,7 +41,7 @@ FLAGS = flags.FLAGS
 
 def main(_):
   pp.pprint(flags.FLAGS.__flags)
-  
+
   # expand user name and environment variables
   FLAGS.data_dir = expand_path(FLAGS.data_dir)
   FLAGS.out_dir = expand_path(FLAGS.out_dir)
@@ -69,7 +69,7 @@ def main(_):
   with open(os.path.join(FLAGS.out_dir, 'FLAGS.json'), 'w') as f:
     flags_dict = {k:FLAGS[k].value for k in FLAGS}
     json.dump(flags_dict, f, indent=4, sort_keys=True, ensure_ascii=False)
-  
+
 
   #gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
   run_config = tf.ConfigProto()
