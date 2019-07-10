@@ -3,7 +3,7 @@
     "batch_size": 1,
     "beta1": 0.5,
     "checkpoint_dir": "./out/monet_single_set_size/checkpoint",
-    "ckpt_freq": 2000,
+    "ckpt_freq": 1000,
     "crop": true,
     "data_dir": "./data",
     "dataset": "monet",
