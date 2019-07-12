@@ -24,7 +24,7 @@
     "output_height": 128,
     "output_width": 128,
     "sample_dir": "./out/monet_single_set_size/samples",
-    "sample_freq": 2000,
+    "sample_freq": 1000,
     "train": true,
     "train_size": Infinity,
     "visualize": false,
