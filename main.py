@@ -36,7 +36,8 @@ flags.DEFINE_integer("ckpt_freq", 400, "save checkpoint every this many iteratio
 flags.DEFINE_integer("z_dim", 100, "dimensions of z")
 flags.DEFINE_string("z_dist", "uniform_signed", "'normal01' or 'uniform_unsigned' or uniform_signed")
 flags.DEFINE_boolean("G_img_sum", False, "Save generator image summaries in log")
-#flags.DEFINE_integer("generate_test_images", 100, "Number of images to generate during test. [100]")
+flags.DEFINE_integer("generate_test_images", 100, "Number of images to generate during test. [100]")
+flags.DEFINE_integer("option", 0, "visualization option to use")
 FLAGS = flags.FLAGS
 
 def main(_):
@@ -140,7 +141,7 @@ def main(_):
         dcgan.save(export_dir, load_counter, ckpt=False, frozen=True)
 
       if FLAGS.visualize:
-        OPTION = 1
+        OPTION = FLAGS.option
         visualize(sess, dcgan, FLAGS, OPTION, FLAGS.sample_dir)
 
 if __name__ == '__main__':

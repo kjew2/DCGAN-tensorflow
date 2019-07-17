@@ -30,7 +30,7 @@ def timestamp(s='%Y%m%d.%H%M%S', ts=None):
   if not ts: ts = time.time()
   st = datetime.datetime.fromtimestamp(ts).strftime(s)
   return st
-  
+
 def show_all_variables():
   model_vars = tf.trainable_variables()
   slim.model_analyzer.analyze_vars(model_vars, print_info=True)
@@ -93,11 +93,11 @@ def center_crop(x, crop_h, crop_w,
   return scipy.misc.imresize(
       x[j:j+crop_h, i:i+crop_w], [resize_h, resize_w])
 
-def transform(image, input_height, input_width, 
+def transform(image, input_height, input_width,
               resize_height=64, resize_width=64, crop=True):
   if crop:
     cropped_image = center_crop(
-      image, input_height, input_width, 
+      image, input_height, input_width,
       resize_height, resize_width)
   else:
     cropped_image = scipy.misc.imresize(image, [resize_height, resize_width])
@@ -139,8 +139,8 @@ def to_json(output_path, *layers):
 
         lines += """
           var layer_%s = {
-            "layer_type": "fc", 
-            "sy": 1, "sx": 1, 
+            "layer_type": "fc",
+            "sy": 1, "sx": 1,
             "out_sx": 1, "out_sy": 1,
             "stride": 1, "pad": 0,
             "out_depth": %s, "in_depth": %s,
@@ -156,7 +156,7 @@ def to_json(output_path, *layers):
 
         lines += """
           var layer_%s = {
-            "layer_type": "deconv", 
+            "layer_type": "deconv",
             "sy": 5, "sx": 5,
             "out_sx": %s, "out_sy": %s,
             "stride": 2, "pad": 1,
@@ -189,7 +189,8 @@ def make_gif(images, fname, duration=2, true_image=False):
 def visualize(sess, dcgan, config, option, sample_dir='samples'):
   image_frame_dim = int(math.ceil(config.batch_size**.5))
   if option == 0:
-    z_sample = np.random.uniform(-0.5, 0.5, size=(config.batch_size, dcgan.z_dim))
+    z_sample = np.random.uniform(-1, 1, size=(config.batch_size, dcgan.z_dim))
+    #print(z_sample, "here")
     samples = sess.run(dcgan.sampler, feed_dict={dcgan.z: z_sample})
     save_images(samples, [image_frame_dim, image_frame_dim], os.path.join(sample_dir, 'test_%s.png' % strftime("%Y%m%d%H%M%S", gmtime() )))
   elif option == 1:
@@ -258,6 +259,10 @@ def visualize(sess, dcgan, config, option, sample_dir='samples'):
     new_image_set = [merge(np.array([images[idx] for images in image_set]), [10, 10]) \
         for idx in range(64) + range(63, -1, -1)]
     make_gif(new_image_set, './samples/test_gif_merged.gif', duration=8)
+  else:
+    print("invalid option")
+    return
+
 
 
 def image_manifold_size(num_images):
