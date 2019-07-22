@@ -1,2 +1,2 @@
-model_checkpoint_path: "model.b1-52000"
-all_model_checkpoint_paths: "model.b1-52000"
+model_checkpoint_path: "model.b1-78000"
+all_model_checkpoint_paths: "model.b1-78000"
