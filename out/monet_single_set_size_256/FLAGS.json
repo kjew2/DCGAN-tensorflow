@@ -7,7 +7,7 @@
     "crop": true,
     "data_dir": "./data",
     "dataset": "monet",
-    "epoch": 50,
+    "epoch": 25,
     "export": false,
     "freeze": false,
     "generate_test_images": 100,
