@@ -1,7 +1,6 @@
 # Data
 data
 *.zip
-logs
 test*
 
 web/js/gen_layers.js
